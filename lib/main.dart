@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appk/map_screen.dart';
@@ -28,6 +29,7 @@ class Myapp extends StatelessWidget {
             ),
             body: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Head(
                     onInfoTap: () {
@@ -40,25 +42,29 @@ class Myapp extends StatelessWidget {
                     },
                   ),
                   Padding(
-                      key: serviceKey,
-                      padding: const EdgeInsets.all(20.0),
-                      child: const Text("Услуги")),
+                    key: serviceKey,
+                    padding:
+                        const EdgeInsets.only(left: 20, top: 16, bottom: 16),
+                    child: const Text("Услуги",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold)),
+                  ),
                   ExpansionTile(
-                    title: Text("Газоснабжение"), 
-                    initiallyExpanded: true,
-                    children: [
-                    SizedBox(
-                      height: 300,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: const [
-                          image(im: "assets/gaz.JPG"),
-                          image(im: "assets/Gaz1.JPG"),
-                          image(im: "assets/gaz3.JPG"),
-                        ],
-                      ),
-                    ),
-                  ]),
+                      title: Text("Газоснабжение"),
+                      initiallyExpanded: true,
+                      children: [
+                        SizedBox(
+                          height: 300,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: const [
+                              image(im: "assets/gaz.JPG"),
+                              image(im: "assets/Gaz1.JPG"),
+                              image(im: "assets/gaz3.JPG"),
+                            ],
+                          ),
+                        ),
+                      ]),
                   ExpansionTile(
                     title: Text("Канализация"),
                     children: [
@@ -107,9 +113,12 @@ class Myapp extends StatelessWidget {
                     key: infoKey,
                     MapScreen: null,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("Этапы газификации"),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20, top: 16, bottom: 16),
+                    child: const Text("Этапы газофикации",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold)),
                   ),
                   const StepperExample(),
                   Info(),
@@ -160,62 +169,105 @@ class Head extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(28.0),
-            child: LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth > 600) {
-                return const Row(
-                  children: [
-                    Flexible(
-                      flex: 3,
-                      child: Text(
-                        'Строительство инженерных систем, газоснабжение котельных.Газоснабжение жилых домов, СНТ, коттеджных посёлков.Системы водоснабжения отопления и водоотведения.Системы вентиляции и дымоходов.Теплотрассы',
+      child: Padding(
+        padding: const EdgeInsets.all(28.0),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                (constraints.maxWidth > 600)
+                    ? const Row(
+                        children: [
+                          Flexible(
+                            flex: 3,
+                            child: Text(
+                              'Строительство инженерных систем, газоснабжение котельных. Газоснабжение жилых домов, СНТ, коттеджных посёлков. Системы водоснабжения отопления и водоотведения. Системы вентиляции и дымоходов. Теплотрассы',
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Spacer()
+                        ],
+                      )
+                    : const Text(
+                        'Строительство инженерных систем, газоснабжение котельных. Газоснабжение жилых домов, СНТ, коттеджных посёлков. Системы водоснабжения отопления и водоотведения. Системы вентиляции и дымоходов. Теплотрассы',
                         style: TextStyle(
                           fontFamily: 'Roboto',
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
+                        textAlign: TextAlign.center,
+                      ),
+                const SizedBox(height: 20),
+                 (constraints.maxWidth > 600) ?
+                Row(
+                  children: [
+                    SizedBox(
+                      height: 75,
+                      width: 200,
+                      child: ElevatedButton(
+                        onPressed: onInfoTap,
+                        child: const Text("Оставить заявку",
+                            style: TextStyle(fontSize: 18)),
                       ),
                     ),
-                    Spacer()
+                    const SizedBox(width: 12),
+                    SizedBox(
+                      height: 75,
+                      width: 200,
+                      child: TextButton(
+                        onPressed: onServiceTap,
+                        child: Text(
+                          "Услуги",
+                          style: TextStyle(
+                              fontSize: 18,
+                              decoration: TextDecoration.underline,
+                              decorationColor:
+                                  Theme.of(context).colorScheme.primary),
+                        ),
+                      ),
+                    ),
                   ],
-                );
-              }
-              return const Text(
-                'Строительство инженерных систем, газоснабжение котельных.Газоснабжение жилых домов, СНТ, коттеджных посёлков.Системы водоснабжения отопления и водоотведения.Системы вентиляции и дымоходов.Теплотрассы',
-                style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-                textAlign: TextAlign.center,
-              );
-            }),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 28),
-            child: Row(
-              children: [
-                ElevatedButton(
-                  onPressed: onServiceTap,
-                  child: const Text("Услуги"),
-                  style: const ButtonStyle(),
-                ),
-                ElevatedButton(
-                  onPressed: onInfoTap,
-                  child: const Text("Оставить заявку"),
-                  style: const ButtonStyle(),
+                ) : Column(
+                  children: [
+                    SizedBox(
+                      height: 75,
+                      width: 200,
+                      child: ElevatedButton(
+                        onPressed: onInfoTap,
+                        child: const Text("Оставить заявку",
+                            style: TextStyle(fontSize: 18)),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      height: 75,
+                      width: 200,
+                      child: TextButton(
+                        onPressed: onServiceTap,
+                        child: Text(
+                          "Услуги",
+                          style: TextStyle(
+                              fontSize: 18,
+                              decoration: TextDecoration.underline,
+                              decorationColor:
+                                  Theme.of(context).colorScheme.primary),
+                        ),
+                      ),
+                    ),
+                  ]
                 ),
               ],
-            ),
-          ),
-        ],
+            );
+          }
+        ),
       ),
     );
   }
