@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_appk/map_screen.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:io/ansi.dart';
 
 import 'pocs.dart';
@@ -17,6 +19,9 @@ class Myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange,brightness: Brightness.dark)
+      ),
         scrollBehavior: MyCustomScrollBehavior(),
         home: Scaffold(
             appBar: AppBar(
@@ -84,7 +89,7 @@ class Myapp extends StatelessWidget {
                   ),
                   Padding(
                       padding: const EdgeInsets.all(20.0), child: Text("Вода")),
-                  Mail(),
+                  Mail(MapScreen: null,),
 
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -102,6 +107,10 @@ class Myapp extends StatelessWidget {
                   StepperExample(),
 
                   Info(),
+                  SizedBox(
+                  height: 500,
+                  child: MapScreen()),
+                 
                 ],
               ),
             )));
@@ -211,7 +220,7 @@ class Head extends StatelessWidget {
 
 class Mail extends StatefulWidget {
   const Mail({
-    super.key,
+    super.key, required MapScreen,
   });
 
   @override
@@ -351,20 +360,28 @@ class _StepperExampleState extends State<StepperExample> {
               alignment: Alignment.centerLeft,
               child: Text('Разработка проекта газоснабжения')),
         ),
-        const Step(
+        Step(
           title: Text('Строительство'),
-          content: Text(
-              'Поставка материалов и выполнение монтажных работ на объекте.'),
+          content: Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+                'Поставка материалов и выполнение монтажных работ на объекте.'),
+          ),
         ),
-        const Step(
+        Step(
           title: Text('Сдача объекта'),
-          content: Text(
-              'Сдача исполнительной документации в АО "Газпром газораспределение Тверь"\n* Оказываем помощь в оформлении документов на поставку газа и технического обслуживания.'),
+          content: Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+                'Сдача исполнительной документации в АО "Газпром газораспределение Тверь"\n* Оказываем помощь в оформлении документов на поставку газа и технического обслуживания.'),
+          ),
         ),
       ],
     );
   }
 }
+
+
 
 class Info extends StatelessWidget {
   const Info({
@@ -398,6 +415,11 @@ class Info extends StatelessWidget {
         ),
       ],
     ));
+
+    
+ 
+
+
   }
 }
 
