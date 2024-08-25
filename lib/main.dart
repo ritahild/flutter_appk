@@ -1,16 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_appk/map_screen.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:io/ansi.dart';
 
 import 'pocs.dart';
 
 void main() {
-  runApp(Myapp());
+  runApp(const Myapp());
 }
 
 class Myapp extends StatelessWidget {
@@ -18,54 +13,66 @@ class Myapp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final infoKey = GlobalKey();
+    final serviceKey = GlobalKey();
+
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange,brightness: Brightness.dark)
-      ),
+        theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.deepOrange, brightness: Brightness.dark)),
         scrollBehavior: MyCustomScrollBehavior(),
         home: Scaffold(
             appBar: AppBar(
-              title: Text("КотлоЭнергоСтрой"),
+              title: const Text("КотлоЭнергоСтрой"),
             ),
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  Head(),
-                  Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text("Услуги")),
+                  Head(
+                    onInfoTap: () {
+                      Scrollable.ensureVisible(infoKey.currentContext!,
+                          duration: const Duration(seconds: 1));
+                    },
+                    onServiceTap: () {
+                      Scrollable.ensureVisible(serviceKey.currentContext!,
+                          duration: const Duration(seconds: 1));
+                    },
+                  ),
+                   Padding(
+                    key: serviceKey,
+                      padding: const EdgeInsets.all(20.0), child: const Text("Услуги")),
                   SizedBox(
                     height: 300,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
-                      children: [
+                      children: const [
                         image(im: "assets/gaz.JPG"),
                         image(im: "assets/Gaz1.JPG"),
                         image(im: "assets/gaz3.JPG"),
                       ],
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.all(20.0), child: Text("Газ")),
+                  const Padding(
+                      padding: EdgeInsets.all(20.0), child: Text("Газ")),
                   SizedBox(
                     height: 300,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
-                      children: [
+                      children: const [
                         image(im: "assets/tryba.jpg"),
                         image(im: "assets/kanalizatsionnye-truby.jpg"),
                         image(im: "assets/canRender.jpg"),
                       ],
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.all(20.0),
+                  const Padding(
+                      padding: EdgeInsets.all(20.0),
                       child: Text("Канализация")),
                   SizedBox(
                     height: 300,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
-                      children: [
+                      children: const [
                         image(im: "assets/tryba.jpg"),
                         image(im: "assets/tryba1.jpg"),
                         image(im: "assets/tryba2.jpg"),
@@ -73,44 +80,32 @@ class Myapp extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text("Трубы")),
+                  const Padding(
+                      padding: EdgeInsets.all(20.0), child: Text("Трубы")),
                   SizedBox(
                     height: 300,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
-                      children: [
+                      children: const [
                         image(im: "assets/vent.jpeg"),
                         image(im: "assets/vent.jpeg"),
                         image(im: "assets/vent.jpeg"),
                       ],
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.all(20.0), child: Text("Вода")),
-                  Mail(MapScreen: null,),
-
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                      padding: EdgeInsets.all(20.0), child: Text("Вода")),
+                  Mail(
+                    key: infoKey,
+                    MapScreen: null,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text("Этапы газификации"),
                   ),
-                  // Image(
-                  //   image: AssetImage(
-                  //     "assets/back.jpg",
-                  //   ),
-                  //   fit: BoxFit.cover,
-                  //   height: 420,
-                  //   width: double.infinity,
-                  // ),
-
-                  StepperExample(),
-
+                  const StepperExample(),
                   Info(),
-                  SizedBox(
-                  height: 500,
-                  child: MapScreen()),
-                 
+                  const SizedBox(height: 500, child: MapScreen()),
                 ],
               ),
             )));
@@ -139,9 +134,9 @@ class image extends StatelessWidget {
 }
 
 class Head extends StatelessWidget {
-  const Head({
-    super.key,
-  });
+  final Null Function() onServiceTap;
+  final Null Function() onInfoTap;
+  const Head({super.key, required this.onInfoTap, required this.onServiceTap});
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +148,7 @@ class Head extends StatelessWidget {
         image: DecorationImage(
           colorFilter:
               ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.darken),
-          image: AssetImage("assets/fon.jpg"),
+          image: const AssetImage("assets/fon.jpg"),
           fit: BoxFit.cover,
         ),
       ),
@@ -164,7 +159,7 @@ class Head extends StatelessWidget {
             padding: const EdgeInsets.all(28.0),
             child: LayoutBuilder(builder: (context, constraints) {
               if (constraints.maxWidth > 600) {
-                return Row(
+                return const Row(
                   children: [
                     Flexible(
                       flex: 3,
@@ -182,7 +177,7 @@ class Head extends StatelessWidget {
                   ],
                 );
               }
-              return Text(
+              return const Text(
                 'Строительство инженерных систем, газоснабжение котельных.Газоснабжение жилых домов, СНТ, коттеджных посёлков.Системы водоснабжения отопления и водоотведения.Системы вентиляции и дымоходов.Теплотрассы',
                 style: TextStyle(
                   fontFamily: 'Roboto',
@@ -195,22 +190,22 @@ class Head extends StatelessWidget {
             }),
           ),
           SizedBox(
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text("Услуги"),
-              style: ButtonStyle(),
-            ),
             height: 30,
             width: 100,
+            child: ElevatedButton(
+              onPressed: onServiceTap,
+              child: const Text("Услуги"),
+              style: const ButtonStyle(),
+            ),
           ),
           SizedBox(
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text("Оставить заявку"),
-              style: ButtonStyle(),
-            ),
             height: 90,
             width: 500,
+            child: ElevatedButton(
+              onPressed: onInfoTap,
+              child: const Text("Оставить заявку"),
+              style: const ButtonStyle(),
+            ),
           ),
         ],
       ),
@@ -220,7 +215,8 @@ class Head extends StatelessWidget {
 
 class Mail extends StatefulWidget {
   const Mail({
-    super.key, required MapScreen,
+    super.key,
+    required MapScreen,
   });
 
   @override
@@ -240,31 +236,33 @@ class _MailState extends State<Mail> {
         image: DecorationImage(
           colorFilter:
               ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.darken),
-          image: AssetImage("assets/post.jpg"),
+          image: const AssetImage("assets/post.jpg"),
           fit: BoxFit.cover,
         ),
       ),
       child: Center(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text("Оставить заявку"),
             ),
             TextField(
               onChanged: (value) {},
               controller: myController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Enter text here',
               ),
             ),
             TextField(
               controller: youController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Enter text here',
               ),
             ),
             SizedBox(
+              height: 120,
+              width: 200,
               child: ElevatedButton(
                 onPressed: () {
                   myController.text;
@@ -272,11 +270,9 @@ class _MailState extends State<Mail> {
                   submitForm(myController.text, youController.text,
                       "Просьба связатся с нами");
                 },
-                child: Text("Отправить"),
-                style: ButtonStyle(),
+                child: const Text("Отправить"),
+                style: const ButtonStyle(),
               ),
-              height: 120,
-              width: 200,
             ),
           ],
         ),
@@ -298,7 +294,7 @@ class _StepperExampleState extends State<StepperExample> {
   @override
   Widget build(BuildContext context) {
     return Stepper(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       controlsBuilder: (context, details) {
         return Padding(
           padding: const EdgeInsets.only(top: 12),
@@ -355,24 +351,24 @@ class _StepperExampleState extends State<StepperExample> {
           ),
         ),
         Step(
-          title: Text('Проектирование'),
+          title: const Text('Проектирование'),
           content: Container(
               alignment: Alignment.centerLeft,
-              child: Text('Разработка проекта газоснабжения')),
+              child: const Text('Разработка проекта газоснабжения')),
         ),
         Step(
-          title: Text('Строительство'),
+          title: const Text('Строительство'),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: Text(
+            child: const Text(
                 'Поставка материалов и выполнение монтажных работ на объекте.'),
           ),
         ),
         Step(
-          title: Text('Сдача объекта'),
+          title: const Text('Сдача объекта'),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: Text(
+            child: const Text(
                 'Сдача исполнительной документации в АО "Газпром газораспределение Тверь"\n* Оказываем помощь в оформлении документов на поставку газа и технического обслуживания.'),
           ),
         ),
@@ -381,8 +377,6 @@ class _StepperExampleState extends State<StepperExample> {
   }
 }
 
-
-
 class Info extends StatelessWidget {
   const Info({
     super.key,
@@ -390,36 +384,31 @@ class Info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
         child: Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text("KES2012Tver@yandex.ru"),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text("г. Тверь, ул. Орджоникидзе, д.3А, оф. 26"),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text("+7 (904) 017-27-50"),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text("+7(910) 936-94-74"),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Text("Пн.–Пт. 9:00–17:00"),
         ),
       ],
     ));
-
-    
- 
-
-
   }
 }
 
