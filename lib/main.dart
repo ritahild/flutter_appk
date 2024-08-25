@@ -289,8 +289,33 @@ class _StepperExampleState extends State<StepperExample> {
   @override
   Widget build(BuildContext context) {
     return Stepper(
-      
-      
+      physics: NeverScrollableScrollPhysics(),
+      controlsBuilder: (context, details) {
+        return Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: Row(
+            children: <Widget>[
+              if (_index < 3)
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(
+                        Theme.of(context).colorScheme.primary),
+                    foregroundColor: MaterialStatePropertyAll(
+                        Theme.of(context).colorScheme.onPrimary),
+                  ),
+                  onPressed: details.onStepContinue,
+                  child: const Text('Далее'),
+                ),
+              const SizedBox(width: 12),
+              if (_index > 0)
+                TextButton(
+                  onPressed: details.onStepCancel,
+                  child: const Text('Назад'),
+                ),
+            ],
+          ),
+        );
+      },
       currentStep: _index,
       onStepCancel: () {
         if (_index > 0) {
@@ -300,7 +325,7 @@ class _StepperExampleState extends State<StepperExample> {
         }
       },
       onStepContinue: () {
-        if (_index <= 0) {
+        if (_index < 3) {
           setState(() {
             _index += 1;
           });
@@ -313,27 +338,28 @@ class _StepperExampleState extends State<StepperExample> {
       },
       steps: <Step>[
         Step(
-          title: const Text('Step 1 title'),
+          title: const Text('Подача заявки'),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: const Text(''),
+            child: const Text(
+                'Заключение договора с АО "Газпром газораспределение Тверь" на технологическое присоединение к газовым сетям.'),
           ),
         ),
-        const Step(
-          title: Text('Step 2 title'),
-          content: Text('Content for Step 2'),
+        Step(
+          title: Text('Проектирование'),
+          content: Container(
+              alignment: Alignment.centerLeft,
+              child: Text('Разработка проекта газоснабжения')),
         ),
         const Step(
-          title: Text('Step 3 title'),
-          content: Text('Content for Step 3'),
+          title: Text('Строительство'),
+          content: Text(
+              'Поставка материалов и выполнение монтажных работ на объекте.'),
         ),
         const Step(
-          title: Text('Step 5 title'),
-          content: Text('Content for Step 4'),
-        ),
-        const Step(
-          title: Text('Step 2 title'),
-          content: Text('Content for Step 5'),
+          title: Text('Сдача объекта'),
+          content: Text(
+              'Сдача исполнительной документации в АО "Газпром газораспределение Тверь"\n* Оказываем помощь в оформлении документов на поставку газа и технического обслуживания.'),
         ),
       ],
     );
