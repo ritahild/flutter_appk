@@ -39,63 +39,70 @@ class Myapp extends StatelessWidget {
                           duration: const Duration(seconds: 1));
                     },
                   ),
-                   Padding(
-                    key: serviceKey,
-                      padding: const EdgeInsets.all(20.0), child: const Text("Услуги")),
-                  SizedBox(
-                    height: 300,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: const [
-                        image(im: "assets/gaz.JPG"),
-                        image(im: "assets/Gaz1.JPG"),
-                        image(im: "assets/gaz3.JPG"),
-                      ],
+                  Padding(
+                      key: serviceKey,
+                      padding: const EdgeInsets.all(20.0),
+                      child: const Text("Услуги")),
+                  ExpansionTile(
+                    title: Text("Газоснабжение"), 
+                    initiallyExpanded: true,
+                    children: [
+                    SizedBox(
+                      height: 300,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: const [
+                          image(im: "assets/gaz.JPG"),
+                          image(im: "assets/Gaz1.JPG"),
+                          image(im: "assets/gaz3.JPG"),
+                        ],
+                      ),
                     ),
+                  ]),
+                  ExpansionTile(
+                    title: Text("Канализация"),
+                    children: [
+                      SizedBox(
+                        height: 300,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: const [
+                            image(im: "assets/tryba.jpg"),
+                            image(im: "assets/kanalizatsionnye-truby.jpg"),
+                            image(im: "assets/canRender.jpg"),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const Padding(
-                      padding: EdgeInsets.all(20.0), child: Text("Газ")),
-                  SizedBox(
-                    height: 300,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: const [
-                        image(im: "assets/tryba.jpg"),
-                        image(im: "assets/kanalizatsionnye-truby.jpg"),
-                        image(im: "assets/canRender.jpg"),
-                      ],
+                  ExpansionTile(title: Text("Водоснабжение"), children: [
+                    SizedBox(
+                      height: 300,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: const [
+                          image(im: "assets/tryba.jpg"),
+                          image(im: "assets/tryba1.jpg"),
+                          image(im: "assets/tryba2.jpg"),
+                          image(im: "assets/tryba3.jpg"),
+                        ],
+                      ),
                     ),
-                  ),
-                  const Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: Text("Канализация")),
-                  SizedBox(
-                    height: 300,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: const [
-                        image(im: "assets/tryba.jpg"),
-                        image(im: "assets/tryba1.jpg"),
-                        image(im: "assets/tryba2.jpg"),
-                        image(im: "assets/tryba3.jpg"),
-                      ],
-                    ),
-                  ),
-                  const Padding(
-                      padding: EdgeInsets.all(20.0), child: Text("Трубы")),
-                  SizedBox(
-                    height: 300,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: const [
-                        image(im: "assets/vent.jpeg"),
-                        image(im: "assets/vent.jpeg"),
-                        image(im: "assets/vent.jpeg"),
-                      ],
-                    ),
-                  ),
-                  const Padding(
-                      padding: EdgeInsets.all(20.0), child: Text("Вода")),
+                  ]),
+                  ExpansionTile(
+                      title: Text("Дымоходы и вентиляция"),
+                      children: [
+                        SizedBox(
+                            height: 300,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: const [
+                                image(im: "assets/vent.jpeg"),
+                                image(im: "assets/vent.jpeg"),
+                                image(im: "assets/vent.jpeg"),
+                              ],
+                            )),
+                      ]),
                   Mail(
                     key: infoKey,
                     MapScreen: null,
@@ -294,95 +301,95 @@ class _StepperExampleState extends State<StepperExample> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SizedBox(
-          height: (constraints.maxWidth > 700) ? 200 : null,
-          child: custom_stepper.Stepper(
-            type: (constraints.maxWidth > 700) ? custom_stepper.StepperType.horizontal : custom_stepper.StepperType.vertical,
-            physics: const NeverScrollableScrollPhysics(),
-            controlsBuilder: (context, details) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: Row(
-                  children: <Widget>[
-                    if (_index < 3)
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(
-                              Theme.of(context).colorScheme.primary),
-                          foregroundColor: MaterialStatePropertyAll(
-                              Theme.of(context).colorScheme.onPrimary),
-                        ),
-                        onPressed: details.onStepContinue,
-                        child: const Text('Далее'),
+    return LayoutBuilder(builder: (context, constraints) {
+      return SizedBox(
+        height: (constraints.maxWidth > 700) ? 200 : null,
+        child: custom_stepper.Stepper(
+          type: (constraints.maxWidth > 700)
+              ? custom_stepper.StepperType.horizontal
+              : custom_stepper.StepperType.vertical,
+          physics: const NeverScrollableScrollPhysics(),
+          controlsBuilder: (context, details) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Row(
+                children: <Widget>[
+                  if (_index < 3)
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(
+                            Theme.of(context).colorScheme.primary),
+                        foregroundColor: MaterialStatePropertyAll(
+                            Theme.of(context).colorScheme.onPrimary),
                       ),
-                    const SizedBox(width: 12),
-                    if (_index > 0)
-                      TextButton(
-                        onPressed: details.onStepCancel,
-                        child: const Text('Назад'),
-                      ),
-                  ],
-                ),
-              );
-            },
-            currentStep: _index,
-            onStepCancel: () {
-              if (_index > 0) {
-                setState(() {
-                  _index -= 1;
-                });
-              }
-            },
-            onStepContinue: () {
-              if (_index < 3) {
-                setState(() {
-                  _index += 1;
-                });
-              }
-            },
-            onStepTapped: (int index) {
+                      onPressed: details.onStepContinue,
+                      child: const Text('Далее'),
+                    ),
+                  const SizedBox(width: 12),
+                  if (_index > 0)
+                    TextButton(
+                      onPressed: details.onStepCancel,
+                      child: const Text('Назад'),
+                    ),
+                ],
+              ),
+            );
+          },
+          currentStep: _index,
+          onStepCancel: () {
+            if (_index > 0) {
               setState(() {
-                _index = index;
+                _index -= 1;
               });
-            },
-            steps: <custom_stepper.Step>[
-              custom_stepper.Step(
-                title: const Text('Подача заявки'),
-                content: Container(
+            }
+          },
+          onStepContinue: () {
+            if (_index < 3) {
+              setState(() {
+                _index += 1;
+              });
+            }
+          },
+          onStepTapped: (int index) {
+            setState(() {
+              _index = index;
+            });
+          },
+          steps: <custom_stepper.Step>[
+            custom_stepper.Step(
+              title: const Text('Подача заявки'),
+              content: Container(
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                    'Заключение договора с АО "Газпром газораспределение Тверь" на технологическое присоединение к газовым сетям.'),
+              ),
+            ),
+            custom_stepper.Step(
+              title: const Text('Проектирование'),
+              content: Container(
                   alignment: Alignment.centerLeft,
-                  child: const Text(
-                      'Заключение договора с АО "Газпром газораспределение Тверь" на технологическое присоединение к газовым сетям.'),
-                ),
+                  child: const Text('Разработка проекта газоснабжения')),
+            ),
+            custom_stepper.Step(
+              title: const Text('Строительство'),
+              content: Container(
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                    'Поставка материалов и выполнение монтажных работ на объекте.'),
               ),
-              custom_stepper.Step(
-                title: const Text('Проектирование'),
-                content: Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text('Разработка проекта газоснабжения')),
+            ),
+            custom_stepper.Step(
+              title: const Text('Сдача объекта'),
+              content: Container(
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                    'Сдача исполнительной документации в АО "Газпром газораспределение Тверь"\n* Оказываем помощь в оформлении документов на поставку газа и технического обслуживания.'),
               ),
-              custom_stepper.Step(
-                title: const Text('Строительство'),
-                content: Container(
-                  alignment: Alignment.centerLeft,
-                  child: const Text(
-                      'Поставка материалов и выполнение монтажных работ на объекте.'),
-                ),
-              ),
-              custom_stepper.Step(
-                title: const Text('Сдача объекта'),
-                content: Container(
-                  alignment: Alignment.centerLeft,
-                  child: const Text(
-                      'Сдача исполнительной документации в АО "Газпром газораспределение Тверь"\n* Оказываем помощь в оформлении документов на поставку газа и технического обслуживания.'),
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
