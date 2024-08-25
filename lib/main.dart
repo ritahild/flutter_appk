@@ -284,8 +284,10 @@ class Mail extends StatefulWidget {
 }
 
 class _MailState extends State<Mail> {
-  final myController = TextEditingController();
-  final youController = TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -300,41 +302,66 @@ class _MailState extends State<Mail> {
           fit: BoxFit.cover,
         ),
       ),
-      child: Center(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Оставить заявку"),
-            ),
-            TextField(
-              onChanged: (value) {},
-              controller: myController,
-              decoration: const InputDecoration(
-                hintText: 'Enter text here',
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("Оставить заявку", style: TextStyle(fontSize: 24)),
               ),
-            ),
-            TextField(
-              controller: youController,
-              decoration: const InputDecoration(
-                hintText: 'Enter text here',
-              ),
-            ),
-            SizedBox(
-              height: 120,
-              width: 200,
-              child: ElevatedButton(
-                onPressed: () {
-                  myController.text;
-                  youController.text;
-                  submitForm(myController.text, youController.text,
-                      "Просьба связатся с нами");
+              TextFormField(
+                onChanged: (value) {},
+                controller: nameController,
+                decoration: const InputDecoration(
+                  hintText: 'Фамилия Имя Отчество',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Введите Фамилию Имя Отчество';
+                  }
+                  return null;
                 },
-                child: const Text("Отправить"),
-                style: const ButtonStyle(),
               ),
-            ),
-          ],
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: emailController,
+                decoration: const InputDecoration(
+                  hintText: 'email@example.com',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Введите email';
+                  }
+                  if (!RegExp(
+                          r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                      .hasMatch(value)) {
+                    return 'Введите корректный E-mail';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12),
+              SizedBox(
+                height: 75,
+                width: 200,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      submitForm(nameController.text, emailController.text,
+                          "Просьба связатся с нами");
+                    }
+                  },
+                  child: const Text("Отправить"),
+                  style: const ButtonStyle(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
