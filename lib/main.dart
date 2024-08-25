@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_appk/map_screen.dart';
+import 'customStepper.dart' as custom_stepper;
 
 import 'pocs.dart';
 
@@ -293,7 +294,7 @@ class _StepperExampleState extends State<StepperExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Stepper(
+    return custom_stepper.Stepper(
       physics: const NeverScrollableScrollPhysics(),
       controlsBuilder: (context, details) {
         return Padding(
@@ -341,8 +342,8 @@ class _StepperExampleState extends State<StepperExample> {
           _index = index;
         });
       },
-      steps: <Step>[
-        Step(
+      steps: <custom_stepper.Step>[
+        custom_stepper.Step(
           title: const Text('Подача заявки'),
           content: Container(
             alignment: Alignment.centerLeft,
@@ -350,13 +351,13 @@ class _StepperExampleState extends State<StepperExample> {
                 'Заключение договора с АО "Газпром газораспределение Тверь" на технологическое присоединение к газовым сетям.'),
           ),
         ),
-        Step(
+        custom_stepper.Step(
           title: const Text('Проектирование'),
           content: Container(
               alignment: Alignment.centerLeft,
               child: const Text('Разработка проекта газоснабжения')),
         ),
-        Step(
+        custom_stepper.Step(
           title: const Text('Строительство'),
           content: Container(
             alignment: Alignment.centerLeft,
@@ -364,7 +365,7 @@ class _StepperExampleState extends State<StepperExample> {
                 'Поставка материалов и выполнение монтажных работ на объекте.'),
           ),
         ),
-        Step(
+        custom_stepper.Step(
           title: const Text('Сдача объекта'),
           content: Container(
             alignment: Alignment.centerLeft,
