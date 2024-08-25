@@ -148,46 +148,62 @@ class Head extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Padding(
-        
-        padding: const EdgeInsets.only(left: 20,right: 300,top: 40,bottom: 30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          
-          children: [
-            Center(
-              child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    'Строительство инженерных систем, газоснабжение котельных.Газоснабжение жилых домов, СНТ, коттеджных посёлков.Системы водоснабжения отопления и водоотведения.Системы вентиляции и дымоходов.Теплотрассы',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: LayoutBuilder(builder: (context, constraints) {
+              if (constraints.maxWidth > 600) {
+                return Row(
+                  children: [
+                    Flexible(
+                      flex: 3,
+                      child: Text(
+                        'Строительство инженерных систем, газоснабжение котельных.Газоснабжение жилых домов, СНТ, коттеджных посёлков.Системы водоснабжения отопления и водоотведения.Системы вентиляции и дымоходов.Теплотрассы',
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  )),
+                    Spacer()
+                  ],
+                );
+              }
+              return Text(
+                'Строительство инженерных систем, газоснабжение котельных.Газоснабжение жилых домов, СНТ, коттеджных посёлков.Системы водоснабжения отопления и водоотведения.Системы вентиляции и дымоходов.Теплотрассы',
+                style: TextStyle(
+                  fontFamily: 'Roboto',
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              );
+            }),
+          ),
+          SizedBox(
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Text("Услуги"),
+              style: ButtonStyle(),
             ),
-            SizedBox(
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text("Услуги"),
-                style: ButtonStyle(),
-              ),
-              height: 30,
-              width: 100,
+            height: 30,
+            width: 100,
+          ),
+          SizedBox(
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Text("Оставить заявку"),
+              style: ButtonStyle(),
             ),
-            SizedBox(
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text("Оставить заявку"),
-                style: ButtonStyle(),
-              ),
-              height: 90,
-              width: 500,
-            ),
-          ],
-        ),
+            height: 90,
+            width: 500,
+          ),
+        ],
       ),
     );
   }
