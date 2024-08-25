@@ -155,6 +155,7 @@ class Head extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(28.0),
@@ -190,22 +191,21 @@ class Head extends StatelessWidget {
               );
             }),
           ),
-          SizedBox(
-            height: 30,
-            width: 100,
-            child: ElevatedButton(
-              onPressed: onServiceTap,
-              child: const Text("Услуги"),
-              style: const ButtonStyle(),
-            ),
-          ),
-          SizedBox(
-            height: 90,
-            width: 500,
-            child: ElevatedButton(
-              onPressed: onInfoTap,
-              child: const Text("Оставить заявку"),
-              style: const ButtonStyle(),
+          Padding(
+            padding: const EdgeInsets.only(left: 28),
+            child: Row(
+              children: [
+                ElevatedButton(
+                  onPressed: onServiceTap,
+                  child: const Text("Услуги"),
+                  style: const ButtonStyle(),
+                ),
+                ElevatedButton(
+                  onPressed: onInfoTap,
+                  child: const Text("Оставить заявку"),
+                  style: const ButtonStyle(),
+                ),
+              ],
             ),
           ),
         ],
@@ -294,86 +294,94 @@ class _StepperExampleState extends State<StepperExample> {
 
   @override
   Widget build(BuildContext context) {
-    return custom_stepper.Stepper(
-      physics: const NeverScrollableScrollPhysics(),
-      controlsBuilder: (context, details) {
-        return Padding(
-          padding: const EdgeInsets.only(top: 12),
-          child: Row(
-            children: <Widget>[
-              if (_index < 3)
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                        Theme.of(context).colorScheme.primary),
-                    foregroundColor: MaterialStatePropertyAll(
-                        Theme.of(context).colorScheme.onPrimary),
-                  ),
-                  onPressed: details.onStepContinue,
-                  child: const Text('Далее'),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SizedBox(
+          height: (constraints.maxWidth > 700) ? 200 : null,
+          child: custom_stepper.Stepper(
+            type: (constraints.maxWidth > 700) ? custom_stepper.StepperType.horizontal : custom_stepper.StepperType.vertical,
+            physics: const NeverScrollableScrollPhysics(),
+            controlsBuilder: (context, details) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Row(
+                  children: <Widget>[
+                    if (_index < 3)
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll(
+                              Theme.of(context).colorScheme.primary),
+                          foregroundColor: MaterialStatePropertyAll(
+                              Theme.of(context).colorScheme.onPrimary),
+                        ),
+                        onPressed: details.onStepContinue,
+                        child: const Text('Далее'),
+                      ),
+                    const SizedBox(width: 12),
+                    if (_index > 0)
+                      TextButton(
+                        onPressed: details.onStepCancel,
+                        child: const Text('Назад'),
+                      ),
+                  ],
                 ),
-              const SizedBox(width: 12),
-              if (_index > 0)
-                TextButton(
-                  onPressed: details.onStepCancel,
-                  child: const Text('Назад'),
+              );
+            },
+            currentStep: _index,
+            onStepCancel: () {
+              if (_index > 0) {
+                setState(() {
+                  _index -= 1;
+                });
+              }
+            },
+            onStepContinue: () {
+              if (_index < 3) {
+                setState(() {
+                  _index += 1;
+                });
+              }
+            },
+            onStepTapped: (int index) {
+              setState(() {
+                _index = index;
+              });
+            },
+            steps: <custom_stepper.Step>[
+              custom_stepper.Step(
+                title: const Text('Подача заявки'),
+                content: Container(
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                      'Заключение договора с АО "Газпром газораспределение Тверь" на технологическое присоединение к газовым сетям.'),
                 ),
+              ),
+              custom_stepper.Step(
+                title: const Text('Проектирование'),
+                content: Container(
+                    alignment: Alignment.centerLeft,
+                    child: const Text('Разработка проекта газоснабжения')),
+              ),
+              custom_stepper.Step(
+                title: const Text('Строительство'),
+                content: Container(
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                      'Поставка материалов и выполнение монтажных работ на объекте.'),
+                ),
+              ),
+              custom_stepper.Step(
+                title: const Text('Сдача объекта'),
+                content: Container(
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                      'Сдача исполнительной документации в АО "Газпром газораспределение Тверь"\n* Оказываем помощь в оформлении документов на поставку газа и технического обслуживания.'),
+                ),
+              ),
             ],
           ),
         );
-      },
-      currentStep: _index,
-      onStepCancel: () {
-        if (_index > 0) {
-          setState(() {
-            _index -= 1;
-          });
-        }
-      },
-      onStepContinue: () {
-        if (_index < 3) {
-          setState(() {
-            _index += 1;
-          });
-        }
-      },
-      onStepTapped: (int index) {
-        setState(() {
-          _index = index;
-        });
-      },
-      steps: <custom_stepper.Step>[
-        custom_stepper.Step(
-          title: const Text('Подача заявки'),
-          content: Container(
-            alignment: Alignment.centerLeft,
-            child: const Text(
-                'Заключение договора с АО "Газпром газораспределение Тверь" на технологическое присоединение к газовым сетям.'),
-          ),
-        ),
-        custom_stepper.Step(
-          title: const Text('Проектирование'),
-          content: Container(
-              alignment: Alignment.centerLeft,
-              child: const Text('Разработка проекта газоснабжения')),
-        ),
-        custom_stepper.Step(
-          title: const Text('Строительство'),
-          content: Container(
-            alignment: Alignment.centerLeft,
-            child: const Text(
-                'Поставка материалов и выполнение монтажных работ на объекте.'),
-          ),
-        ),
-        custom_stepper.Step(
-          title: const Text('Сдача объекта'),
-          content: Container(
-            alignment: Alignment.centerLeft,
-            child: const Text(
-                'Сдача исполнительной документации в АО "Газпром газораспределение Тверь"\n* Оказываем помощь в оформлении документов на поставку газа и технического обслуживания.'),
-          ),
-        ),
-      ],
+      }
     );
   }
 }
